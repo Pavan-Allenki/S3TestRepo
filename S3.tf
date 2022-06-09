@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "unrestricted" {
+resource "aws_s3_bucket" "mybucket" {
   bucket = "examplebuckettftest"
   #zpc-skip-policy: ZS-AWS-00034:testing
   acl    = "public-read-write"
