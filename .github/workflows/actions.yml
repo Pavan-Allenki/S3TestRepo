@@ -6,19 +6,22 @@ on:
   push :
     branches:    
       - 'main'
+env :
+  API_URL : "https://main.dev.api.zscwp.io"
+  AUTH_URL : "https://zscaler-poc.us.auth0.com"
 jobs:
   test:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - uses : ZscalerCWP/Zscaler-IaC-Action@v1.0.0
+      - uses : ZscalerCWP/Zscaler-IaC-Action@main
         id : iac-scan
         with:
           client_id : ${{ secrets.ZSCANNER_CLIENT_ID }}
           client_secret : ${{ secrets.ZSCANNER_CLIENT_SECRET }}
           fail_build : 'true'
           output_format : 'human+github-sarif'
-          region : 'US'
+          region : 'CUSTOM'
       - run : echo ${{ steps.iac-scan.outputs.sarif_file_path }}
       - name: Upload SARIF file
         if: ${{ success() || failure() && (steps.iac-scan.outputs.sarif_file_path != '') }}
